@@ -1,4 +1,4 @@
-CREATE DATABASE sdcphotos
+CREATE DATABASE sdcPhotos
 
 CREATE TABLE listings(
   id SERIAL PRIMARY KEY,
