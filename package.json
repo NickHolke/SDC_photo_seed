@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "image-downloader": "^3.5.0"
+    "faker": "^4.1.0",
+    "image-downloader": "^3.5.0",
+    "pg": "^7.15.1"
   }
 }

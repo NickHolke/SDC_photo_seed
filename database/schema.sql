@@ -1,35 +1,34 @@
-CREATE DATABASE sdcPhotos
+DROP DATABASE IF EXISTS photogallery;
+
+CREATE DATABASE photogallery;
+
+\c "photogallery";
 
 CREATE TABLE listings(
-  id SERIAL PRIMARY KEY,
+  listing_id SERIAL PRIMARY KEY,
   title TEXT,
-  host TEXT,
-  address TEXT
+  hostname TEXT,
+  address TEXT,
+  city TEXT
 );
 
-CREATE TABLE host_photos(
-  id SERIAL PRIMARY KEY,
+CREATE TABLE photos(
+  photo_id SERIAL PRIMARY KEY,
   description TEXT,
   url TEXT,
   resolution TEXT,
-  listing_id FOREIGN KEY
-);
-
-CREATE TABLE guest_photos(
-  id SERIAL PRIMARY KEY,
-  url TEXT,
-  resolution TEXT,
-  listing_id FOREIGN KEY
+  listing_id INTEGER REFERENCES listings(listing_id)
 );
 
 CREATE TABLE users(
-  id SERIAL PRIMARY KEY,
+  user_id SERIAL PRIMARY KEY,
   first_name TEXT,
   last_name TEXT,
-  username FOREIGN KEY
+  username TEXT
 );
 
 CREATE TABLE liked_photos(
-  photo_id FOREIGN KEY,
-  user_id FOREIGN KEY
+  liked_photo_id SERIAL PRIMARY KEY,
+  photo_id INTEGER REFERENCES photos(photo_id),
+  user_id INTEGER REFERENCES users(user_id)
 );
