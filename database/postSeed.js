@@ -39,23 +39,27 @@ const pool = new Pool({
 
 // pool.end()
 
-const createRow = () => {
-  return `${faker.lorem.words()},${faker.name.firstName()},${faker.address.streetAddress()},${faker.address.city()},${faker.address.state()}\n`
+
+
+const createStr = () => {
+  const createRow = () => {
+    return `${faker.lorem.words()},${faker.name.firstName()},${faker.address.streetAddress()},${faker.address.city()},${faker.address.state()}\n`
+  }
+  let csvString = 'title,hostname,address,city,state\n';
+  let rows = 100;
+
+  while (rows > 0) {
+    csvString += createRow();
+    rows--;
+  }
+
+  return csvString
 }
 
-let csvString = 'title,hostname,address,city,state\n';
-let i = 20;
-
-while (i > 0) {
-  csvString += createRow();
-  i--;
-}
-
-fs.writeFile('./listings.csv', csvString, (err) => {
+fs.writeFile('./listings.csv', createStr(), (err) => {
   if (err) {
     console.log(err);
   }
-  let path = 
   pool.query(`COPY listings(title,hostname,address,city,state) FROM '/Users/nickholke/Desktop/HackReactor/SDC/photo-download/listings.csv' DELIMITER ',' CSV HEADER`, (err, res) => {
     if (err) {
       console.log(err)
