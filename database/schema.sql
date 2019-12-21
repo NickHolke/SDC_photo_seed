@@ -9,7 +9,8 @@ CREATE TABLE listings(
   title TEXT,
   hostname TEXT,
   address TEXT,
-  city TEXT
+  city TEXT,
+  state TEXT
 );
 
 CREATE TABLE photos(

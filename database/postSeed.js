@@ -1,9 +1,5 @@
 const faker = require('faker');
 
-console.log(faker.address.city());
-console.log(faker.address.city());
-console.log(faker.address.city());
-
 const { Pool, Client } = require('pg');
 
 const pool = new Pool({
@@ -13,19 +9,36 @@ const pool = new Pool({
   port: '5432'
 })
 
-pool.connect();
-const text = 'INSERT INTO listings(title, hostname, address, city) VALUES($1, $2, $3, $4)'
-const values = ['pretty home', 'brian', '2344 tanager', 'pleasanton']
-  pool.query(text, values, (err, res) => {
-    if (err) {
-      console.log(err.stack)
-    } else {
-      console.log('inserted row')
-    }
-  })
-  pool.end(() => {
-    console.log('pool has ended')
-  })
+const text = 'INSERT INTO listings(title, hostname, address, city, state) VALUES($1, $2, $3, $4, $5)'
+let i = 10; 
+
+while (i > 0) {
+  let values = [
+     faker.lorem.words(),
+     faker.name.firstName(),
+     faker.address.streetAddress(),
+     faker.address.city(),
+     faker.address.state()
+    ]
+  // pool.query(text, values, (err, res) => {
+  //   if (err) {
+  //     console.log(err.stack)
+  //   } else {
+  //     console.log('inserted row')
+  //   }
+    
+  // })
+
+  pool.query(text, values)
+      .then(res => console.log('row inserted'))
+      .catch(e => console.log(e));
+
+  i--;
+}  
+
+pool.end()
+
+
 
 
 
